@@ -4,7 +4,10 @@ import numpy as np
 def calculate_values(actual_resistance, required_resistance, squad_power):
     missing_resist = required_resistance - actual_resistance
     dmg_factor = np.ceil(missing_resist  * 100 / required_resistance) / 100
-    actual_dmg = max(1 - (2 * dmg_factor), 0.01)
+    actual_dmg = 1 - (2 * dmg_factor)
+    if actual_dmg < 0:
+        actual_dmg = max((actual_dmg/20) + 0.01, 0.001)
+
     actual_power = squad_power * actual_dmg
     actual_dmg_reduction = 1 - actual_dmg
     
